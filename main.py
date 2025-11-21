@@ -10,6 +10,7 @@ import db
 from engine import GameManager, register_handlers
 
 
+async def main() -> None:
 async def _run_application() -> None:
     if config.BOT_TOKEN == "PASTE_TOKEN_HERE":
         raise SystemExit("Впиши BOT_TOKEN в config.py")
@@ -25,6 +26,14 @@ def main() -> None:
     register_handlers(application, manager)
 
     await application.initialize()
+    try:
+        await application.start()
+        await application.updater.start_polling()
+        await application.updater.wait()
+    finally:
+        await application.stop()
+        await application.shutdown()
+        await db.close_pool()
     try:
         await application.start()
         await application.updater.start_polling()
