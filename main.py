@@ -18,6 +18,10 @@ async def main() -> None:
     manager = GameManager(application)
     application.bot_data["manager"] = manager
     register_handlers(application, manager)
+    try:
+        await application.run_polling(close_loop=False)
+    finally:
+        await db.close_pool()
     await application.initialize()
     await application.start()
     await application.updater.start_polling()
