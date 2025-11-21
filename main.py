@@ -43,3 +43,25 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+async def main() -> None:
+    if config.BOT_TOKEN == "PASTE_TOKEN_HERE":
+        raise SystemExit("Впиши BOT_TOKEN в config.py")
+    await db.init_db()
+    application = ApplicationBuilder().token(config.BOT_TOKEN).concurrent_updates(True).build()
+    manager = GameManager(application)
+    application.bot_data["manager"] = manager
+    register_handlers(application, manager)
+    try:
+        await application.run_polling(close_loop=False)
+    finally:
+        await db.close_pool()
+    await application.initialize()
+    await application.start()
+    await application.updater.start_polling()
+    await application.updater.idle()
+    await application.stop()
+    await db.close_pool()
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
