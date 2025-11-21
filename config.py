@@ -3,9 +3,8 @@ from __future__ import annotations
 
 BOT_TOKEN: str = "PASTE_TOKEN_HERE"
 
-# SQLite ініціалізація: файл створиться автоматично поруч із кодом.
-SQLITE_DB_PATH = "mafia.db"
-SQLITE_ISOLATION_LEVEL = None  # autocommit-friendly для частих write-операцій
+SQLITE_DB_PATH = "mafia.sqlite"
+SQLITE_ISOLATION_LEVEL = None
 
 NIGHT_DURATION: int = 60
 DAY_DURATION: int = 60
@@ -18,24 +17,18 @@ MAX_BOTS: int = 6
 
 POINTS_WIN: int = 50
 POINTS_LOSE: int = 10
+POINTS_KILL: int = 5
+POINTS_SAVE: int = 5
 
-DEFAULT_ROLE_DISTRIBUTION = {
-    "don": 1,
-    "mafia": 1,  # adds extra mafia if player count >= 8
-    "doctor": 1,
-    "detective": 1,
-    "deputy": 1,
-    "consigliere": 1,
-    "mayor": 1,
-    "executioner": 1,
-    "petrushka": 1,
-}
+MAFIA_EXTRA_THRESHOLD: int = 8
 
 ALLOW_MAYOR: bool = True
 ALLOW_PETRUSHKA: bool = True
 ALLOW_BUKOVEL: bool = True
+ALLOW_DEPUTY: bool = True
+ALLOW_CONSILGIERE: bool = True
 
-BOT_CHATTER_CHANCE: float = 0.25
+BOTS_HERD_CHANCE: float = 0.45
 
 SHOP_ITEMS = [
     {
@@ -45,5 +38,5 @@ SHOP_ITEMS = [
         "cost_points": 150,
         "effect_type": "active_role",
         "effect_value": 10,
-    }
+    },
 ]
